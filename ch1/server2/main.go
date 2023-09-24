@@ -1,9 +1,3 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 20.
-//!+
-
 // Server2 is a minimal "echo" and counter server.
 package main
 
@@ -14,8 +8,10 @@ import (
 	"sync"
 )
 
-var mu sync.Mutex
-var count int
+var (
+	mu    sync.Mutex
+	count int
+)
 
 func main() {
 	http.HandleFunc("/", handler)
@@ -37,5 +33,3 @@ func counter(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Count %d\n", count)
 	mu.Unlock()
 }
-
-//!-
