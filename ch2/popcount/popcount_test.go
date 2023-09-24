@@ -1,6 +1,3 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
 package popcount_test
 
 import (
@@ -87,3 +84,13 @@ func BenchmarkPopCountByShifting(b *testing.B) {
 // BenchmarkBitCount-12                 2000000000        0.27 ns/op
 // BenchmarkPopCountByClearing-12       100000000        18.5 ns/op
 // BenchmarkPopCountByShifting-12       20000000         70.1 ns/op
+
+// D:\GitRepo\gopl.io\ch2\popcount>go test -cpu=8 -bench=. gopl.io/ch2/popcount
+// goos: windows
+// goarch: amd64
+// pkg: gopl.io/ch2/popcount
+// cpu: AMD Ryzen 7 5800H with Radeon Graphics
+// BenchmarkPopCount-8                     1000000000               0.2297 ns/op
+// BenchmarkBitCount-8                     1000000000               0.2314 ns/op
+// BenchmarkPopCountByClearing-8           140093498                8.551 ns/op
+// BenchmarkPopCountByShifting-8           83498008                15.94 ns/op

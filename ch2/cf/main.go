@@ -1,9 +1,3 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 43.
-//!+
-
 // Cf converts its numeric argument to Celsius and Fahrenheit.
 package main
 
@@ -16,6 +10,10 @@ import (
 )
 
 func main() {
+	if len(os.Args) == 1 {
+		os.Args = append(os.Args, "12.3")
+	}
+
 	for _, arg := range os.Args[1:] {
 		t, err := strconv.ParseFloat(arg, 64)
 		if err != nil {
@@ -28,5 +26,3 @@ func main() {
 			f, tempconv.FToC(f), c, tempconv.CToF(c))
 	}
 }
-
-//!-
