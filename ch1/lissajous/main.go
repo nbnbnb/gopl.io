@@ -1,3 +1,4 @@
+// Lissajous generates GIF animations of random Lissajous figures.
 package main
 
 import (
@@ -14,6 +15,7 @@ import (
 )
 
 // 复合类型
+// 一个 slice 切片
 var palette = []color.Color{color.White, color.Black}
 
 const (
@@ -22,9 +24,12 @@ const (
 )
 
 func main() {
-
 	// 需要设置一个随机值
 	rand.Seed(time.Now().UTC().UnixNano())
+
+	if len(os.Args) == 1 {
+		os.Args = append(os.Args, "web")
+	}
 
 	if len(os.Args) > 1 && os.Args[1] == "web" {
 
@@ -35,6 +40,7 @@ func main() {
 		http.HandleFunc("/", handler)
 
 		log.Fatal(http.ListenAndServe("localhost:8000", nil))
+
 		return
 	}
 
@@ -42,7 +48,6 @@ func main() {
 }
 
 func lissajous(out io.Writer) {
-
 	const (
 		cycles  = 5     // number of complete x oscillator revolutions
 		res     = 0.001 // angular resolution
@@ -53,7 +58,7 @@ func lissajous(out io.Writer) {
 
 	freq := rand.Float64() * 3.0
 
-	// 一个 struct 类型
+	// 一个 struct 结构体
 	anim := gif.GIF{LoopCount: nframes}
 
 	phase := 0.0
@@ -66,8 +71,7 @@ func lissajous(out io.Writer) {
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-				blackIndex)
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), blackIndex)
 		}
 
 		phase += 0.1
