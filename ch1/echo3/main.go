@@ -7,5 +7,6 @@ import (
 )
 
 func main() {
+	fmt.Println("------------")
 	fmt.Println(strings.Join(os.Args[1:], " "))
 }
