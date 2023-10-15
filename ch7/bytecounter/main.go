@@ -1,35 +1,28 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 173.
-
-// Bytecounter demonstrates an implementation of io.Writer that counts bytes.
 package main
 
 import (
 	"fmt"
 )
 
-//!+bytecounter
-
 type ByteCounter int
 
+// 给 ByteCounter 添加 Write 方法(使其实现 io.Writer 接口)
 func (c *ByteCounter) Write(p []byte) (int, error) {
-	*c += ByteCounter(len(p)) // convert int to ByteCounter
+	*c += ByteCounter(len(p))
 	return len(p), nil
 }
 
-//!-bytecounter
-
 func main() {
-	//!+main
 	var c ByteCounter
+	// 调用外挂的 Write 方法
 	c.Write([]byte("hello"))
-	fmt.Println(c) // "5", = len("hello")
+	fmt.Println(c)
 
-	c = 0 // reset the counter
-	var name = "Dolly"
+	c = 0
+	name := "Dolly"
+	// Fprintf 的第一个参数是 io.Writer 接口类型
+	// 由于 ByteCounter（指针）实现了该接口，所以签名匹配
+	// 注意：此处传递的是指针，因为 ByteCounter 的 Write 方法是指针接收者
 	fmt.Fprintf(&c, "hello, %s", name)
-	fmt.Println(c) // "12", = len("hello, Dolly")
-	//!-main
+	fmt.Println(c)
 }
