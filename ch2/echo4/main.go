@@ -1,12 +1,15 @@
-// Echo4 prints its command-line arguments.
+// 解析命令行参数
 package main
 
 import (
+	// 导入一个 flag 包，用于处理命令行参数
 	"flag"
 	"fmt"
 	"strings"
 )
 
+// 设置变量的默认值
+// 注意，返回的都是指针类型
 var (
 	n   = flag.Bool("n", false, "omit trailing newline")
 	sep = flag.String("s", " ", "separator")
@@ -21,3 +24,21 @@ func main() {
 		fmt.Println()
 	}
 }
+
+/*
+支持的 flag 类型
+-flag
+--flag   // double dashes are also permitted
+-flag=x
+-flag x  // non-boolean flags only
+
+使用方式
+go run .\main.go -n=true -s='&' a=1 b=2 c=3
+go run .\main.go --n -s='&' a=1 b=2 c=3
+go run .\main.go -n -s='&' a=1 b=2 c=3
+
+go run .\main.go -n -s '&' a=1 b=2 c=3
+
+输出
+a=1&b=2&c=3
+*/

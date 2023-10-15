@@ -1,15 +1,17 @@
 package popcount
 
-// pc[i] is the population count of i.
+// 一个 256 字节的数组
 var pc [256]byte
 
+// 包的初始函数
 func init() {
+	// 初始化 pc
 	for i := range pc {
 		pc[i] = pc[i/2] + byte(i&1)
 	}
 }
 
-// PopCount returns the population count (number of set bits) of x.
+// PopCount 算法
 func PopCount(x uint64) int {
 	return int(pc[byte(x>>(0*8))] +
 		pc[byte(x>>(1*8))] +

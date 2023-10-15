@@ -1,8 +1,11 @@
+// 包文件以 _test 结尾，表明是一个测试包
 package popcount_test
 
 import (
+	// 导入 testing 包
 	"testing"
 
+	// 导入 popcount 包（main.go 里面会执行初始化）
 	"gopl.io/ch2/popcount"
 )
 
@@ -40,29 +43,53 @@ func PopCountByShifting(x uint64) int {
 
 // -- Benchmarks --
 
+// Benchmark
+// 所有方法以 Benchmark* 开头，参数为 *testing.B
+
 func BenchmarkPopCount(b *testing.B) {
 	for i := 0; i < b.N; i++ {
+		// 使用 PopCount
 		popcount.PopCount(0x1234567890ABCDEF)
 	}
 }
 
 func BenchmarkBitCount(b *testing.B) {
 	for i := 0; i < b.N; i++ {
+		// 使用 BitCount
 		BitCount(0x1234567890ABCDEF)
 	}
 }
 
 func BenchmarkPopCountByClearing(b *testing.B) {
 	for i := 0; i < b.N; i++ {
+		// 使用 PopCountByClearing
 		PopCountByClearing(0x1234567890ABCDEF)
 	}
 }
 
 func BenchmarkPopCountByShifting(b *testing.B) {
 	for i := 0; i < b.N; i++ {
+		// 使用 PopCountByShifting
 		PopCountByShifting(0x1234567890ABCDEF)
 	}
 }
+
+// 注意：在 CMD 中运行，PowerShell 中不输出 Benchmark 结果
+/*
+	d:\GitRepo\gopl.io\ch2\popcount>go test -cpu=16 -bench=. gopl.io/ch2/popcount
+	goos: windows
+	goarch: amd64
+	pkg: gopl.io/ch2/popcount
+	cpu: AMD Ryzen 7 5800H with Radeon Graphics
+	BenchmarkPopCount-16                    1000000000               0.2284 ns/op
+	BenchmarkBitCount-16                    1000000000               0.2303 ns/op
+	BenchmarkPopCountByClearing-16          141264786                8.454 ns/op
+	BenchmarkPopCountByShifting-16          77231010                15.77 ns/op
+	PASS
+	ok      gopl.io/ch2/popcount    4.036s
+*/
+
+// ----------------------------------------------------------------------------
 
 // Go 1.6, 2.67GHz Xeon
 // $ go test -cpu=4 -bench=. gopl.io/ch2/popcount
@@ -84,13 +111,3 @@ func BenchmarkPopCountByShifting(b *testing.B) {
 // BenchmarkBitCount-12                 2000000000        0.27 ns/op
 // BenchmarkPopCountByClearing-12       100000000        18.5 ns/op
 // BenchmarkPopCountByShifting-12       20000000         70.1 ns/op
-
-// D:\GitRepo\gopl.io\ch2\popcount>go test -cpu=8 -bench=. gopl.io/ch2/popcount
-// goos: windows
-// goarch: amd64
-// pkg: gopl.io/ch2/popcount
-// cpu: AMD Ryzen 7 5800H with Radeon Graphics
-// BenchmarkPopCount-8                     1000000000               0.2297 ns/op
-// BenchmarkBitCount-8                     1000000000               0.2314 ns/op
-// BenchmarkPopCountByClearing-8           140093498                8.551 ns/op
-// BenchmarkPopCountByShifting-8           83498008                15.94 ns/op

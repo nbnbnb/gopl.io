@@ -1,14 +1,17 @@
-// Ftoc prints two Fahrenheit-to-Celsius conversions.
+// 华氏度转摄氏度
 package main
 
 import "fmt"
 
 func main() {
 	const freezingF, boilingF = 32.0, 212.0
-	fmt.Printf("%g°F = %g°C\n", freezingF, fToC(freezingF)) // "32°F = 0°C"
-	fmt.Printf("%g°F = %g°C\n", boilingF, fToC(boilingF))   // "212°F = 100°C"
+
+	// 调用外挂函数 fToC
+	fmt.Printf("%g°F = %g°C\n", freezingF, fToC(freezingF))
+	fmt.Printf("%g°F = %g°C\n", boilingF, fToC(boilingF))
 }
 
+// 给 float64 外挂一个函数
 func fToC(f float64) float64 {
 	return (f - 32) * 5 / 9
 }
